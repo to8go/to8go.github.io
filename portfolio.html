@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T8Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            animation: moveBackground 10s linear infinite;
+            overflow: hidden;
+            position: relative;
+        }
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 20px 20px;
+            }
+        }
+        .card {
+            background-color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            width: 200px;
+            height: 300px;
+            border-radius: 50px;
+            transition: border-radius 0.3s ease, transform 0.5s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            transform: translateY(100vh);
+        }
+        .card.glow {
+            box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.3);
+        }
+        .controls-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            width: 250px;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .control-label {
+            color: white;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        #radius-slider, #card-color, #font-color {
+            width: 120px;
+        }
+        #toggle-dots {
+            width: 100%;
+            padding: 8px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #toggle-dots:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: black;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .subtext {
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 0;
+        }
+        .circular-button {
+            width: auto;
+            height: 50px;
+            border-radius: 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 0 20px 0 10px;
+        }
+        .twitter-logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        .controls-title {
+            color: white;
+            margin: 0 0 10px 0;
+            padding: 0;
+            font-size: 18px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>T8Project</h2>
+        <p class="subtext">Customizable at its best</p>
+        <button class="circular-button" id="twitter-button">
+            <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter Logo" class="twitter-logo">
+            Check my Twitter
+        </button>
+    </div>
+    <div class="controls-card">
+        <h3 class="controls-title">Controls</h3>
+        <div class="control-group">
+            <span class="control-label">Radius:</span>
+            <input type="range" id="radius-slider" min="0" max="50" value="50">
+        </div>
+        <div class="control-group">
+            <span class="control-label">Card Color:</span>
+            <input type="color" id="card-color" value="#ffffff">
+        </div>
+        <div class="control-group">
+            <span class="control-label">Font Color:</span>
+            <input type="color" id="font-color" value="#000000">
+        </div>
+        <button id="toggle-dots">Hide dots</button>
+    </div>
+    <script>
+        const slider = document.getElementById('radius-slider');
+        const cardColorPicker = document.getElementById('card-color');
+        const fontColorPicker = document.getElementById('font-color');
+        const card = document.querySelector('.card');
+        const controlsCard = document.querySelector('.controls-card');
+        const twitterButton = document.getElementById('twitter-button');
+        const toggleDotsButton = document.getElementById('toggle-dots');
+        
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                card.style.transform = 'translateY(0)';
+                controlsCard.style.opacity = '1';
+            }, 100);
+        });
+
+        slider.addEventListener('input', function() {
+            card.style.borderRadius = this.value + 'px';
+        });
+
+        cardColorPicker.addEventListener('input', function() {
+            card.style.backgroundColor = this.value;
+        });
+
+        fontColorPicker.addEventListener('input', function() {
+            card.querySelector('h2').style.color = this.value;
+            card.querySelector('.subtext').style.color = this.value;
+        });
+
+        twitterButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('https://x.com/RealTO8GO', '_blank');
+        });
+
+        toggleDotsButton.addEventListener('click', function() {
+            if (document.body.style.backgroundImage !== 'none') {
+                document.body.style.backgroundImage = 'none';
+                this.textContent = 'Show dots';
+                card.classList.add('glow');
+            } else {
+                document.body.style.backgroundImage = 'radial-gradient(white 1px, transparent 1px)';
+                this.textContent = 'Hide dots';
+                card.classList.remove('glow');
+            }
+        });
+    </script>
+</body>
+</html>
